@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+python3 $1 < "./SortingTest/1000.in"
+python3 $1 < "./SortingTest/2000.in"
+python3 $1 < "./SortingTest/4000.in"
+python3 $1 < "./SortingTest/8000.in"
+python3 $1 < "./SortingTest/16000.in"
+python3 $1 < "./SortingTest/32000.in"
+python3 $1 < "./SortingTest/64000.in"

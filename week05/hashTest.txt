@@ -1,0 +1,17 @@
+insert I 1
+insert IV 4
+insert XXV 25
+search IV
+insert XVI 16
+insert IX 9
+search I
+insert LXIV 64
+search XVI
+insert LXXXI 81
+insert XXXVI 36
+search XXV
+insert XLIX 49
+delete IV
+search IV
+delete LXXXI
+search LXXXI

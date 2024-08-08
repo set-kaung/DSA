@@ -1,0 +1,20 @@
+#!/bin/bash
+
+python3 $1 < "random100.in"
+python3 $1 < "random200.in"
+python3 $1 < "random400.in"
+python3 $1 < "random800.in"
+python3 $1 < "random1600.in"
+python3 $1 < "sorted100.in"
+python3 $1 < "sorted200.in"
+python3 $1 < "sorted400.in"
+python3 $1 < "sorted800.in"
+python3 $1 < "sorted1600.in"
+python3 $1 < "rev100.in"
+python3 $1 < "rev200.in"
+python3 $1 < "rev400.in"
+python3 $1 < "rev800.in"
+python3 $1 < "rev1600.in"
+
+
+
