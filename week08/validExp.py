@@ -70,5 +70,7 @@ post_fix = infix_to_postfix(infix_expr)
 if post_fix == "":
     print("Not valid")
 else:
-    print(evaluate(post_fix))
+    result =  evaluate(post_fix)
+    if result:
+        print(result)
 
