@@ -1,3 +1,6 @@
+# Name: Set Kaung Lwin
+# ID: 6632017
+# Sec: 543
 def print_matrix(matrix):
     rows = len(matrix)
     print("    ",end="") 
