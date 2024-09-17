@@ -40,6 +40,8 @@ class RBTree():
         y = None
         x = self.root
 
+        # because of the loop's behavior, y is set as just before
+        # the place to insert z, aka y is z's potential parent
         while x != self.NULL :                           # Find position for new node
             y = x
             if node.key < x.key :
@@ -76,39 +78,44 @@ class RBTree():
         return node
 
     # Code for left rotate
-    def LR ( self , x ) :
-        y = x.right                                      # Y = Right child of x
-        x.right = y.left                                 # Change right child of x to left child of y
-        if y.left != self.NULL :
-            y.left.p = x
+    def LR(self, x):
+        y = x.right  # y is the right child of x
+        x.right = y.left  # Set x's right child to y's left child
 
-        y.p = x.p                                        # Change parent of y as parent of x
-        if x.p == None :                                 # If parent of x == None ie. root node
-            self.root = y                                # Set y as root
-        elif x == x.p.left :
-            x.p.left = y
-        else :
-            x.p.right = y
-        y.left = x
-        x.p = y
+        if y.left != self.NULL:  # If y's left child is not NULL
+            y.left.p = x  # Set the parent of y's left child to x
+
+        y.p = x.p  # Set y's parent to x's parent
+        if x.p == None:  # If x is the root
+            self.root = y  # Set y as the new root
+        elif x == x.p.left:  # If x is the left child of its parent
+            x.p.left = y  # Set y as the new left child of x's parent
+        else:  # If x is the right child of its parent
+            x.p.right = y  # Set y as the new right child of x's parent
+
+        y.left = x  # Set x as the left child of y
+        x.p = y  # Set y as the parent of x
+
 
 
     # Code for right rotate
-    def RR ( self , x ) :
+    def RR(self, x):
         y = x.left                                       # Y = Left child of x
         x.left = y.right                                 # Change left child of x to right child of y
-        if y.right != self.NULL :
-            y.right.p = x
+        if y.right != self.NULL:
+            y.right.p = x                               # Update parent of y.right
 
-        y.p = x.p                                        # Change parent of y as parent of x
-        if x.p == None :                                 # If x is root node
-            self.root = y                                # Set y as root
-        elif x == x.p.right :
+        y.p = x.p                                        # Change parent of y to parent of x
+        if x.p is None:                                  # If x is the root node
+            self.root = y                               # Set y as the new root
+        elif x == x.p.right:
             x.p.right = y
-        else :
+        else:
             x.p.left = y
-        y.right = x
-        x.p = y
+
+        y.right = x                                      # Make x the right child of y
+        x.p = y                                          # Update parent of x
+
 
 
     # Fix Up Insertion
@@ -148,55 +155,55 @@ class RBTree():
 
 
     # Function to fix issues after deletion
-    def fixDelete ( self , x ) :
-        while x != self.root and x.color == 0 :           # Repeat until x reaches nodes and color of x is black
-            if x == x.p.left :                            # If x is left child of its parent
-                s = x.p.right                             # Sibling of x
-                if s.color == 1 :                         # if sibling is red
-                    s.color = 0                           # Set its color to black
-                    x.p.color = 1                         # Make its parent red
-                    self.LR ( x.p )                       # Call for left rotate on parent of x
-                    s = x.p.right
-                # If both the child are black
-                if s.left.color == 0 and s.right.color == 0 :
-                    s.color = 1                           # Set color of s as red
-                    x = x.p
-                else :
-                    if s.right.color == 0 :               # If right child of s is black
-                        s.left.color = 0                  # set left child of s as black
-                        s.color = 1                       # set color of s as red
-                        self.RR ( s )                     # call right rotation on x
-                        s = x.p.right
+    def fixDelete(self, x):
+        while x != self.root and x.color == 0:  # Repeat until x reaches root and color of x is black
+            if x == x.p.left:  # If x is left child of its parent
+                s = x.p.right  # Sibling of x
+                if s.color == 1:  # If sibling is red
+                    s.color = 0  # Set sibling's color to black
+                    x.p.color = 1  # Make parent's color red
+                    self.LR(x.p)  # Call left rotation on parent
+                    s = x.p.right  # Update sibling
+                # If both children of sibling are black
+                if s.left.color == 0 and s.right.color == 0:
+                    s.color = 1  # Set sibling's color to red
+                    x = x.p  # Move x up to parent
+                else:
+                    if s.right.color == 0:  # If right child of sibling is black
+                        s.left.color = 0  # Set left child of sibling to black
+                        s.color = 1  # Set sibling's color to red
+                        self.RR(s)  # Call right rotation on sibling
+                        s = x.p.right  # Update sibling after rotation
 
-                    s.color = x.p.color
-                    x.p.color = 0                         # Set parent of x as black
-                    s.right.color = 0
-                    self.LR ( x.p )                       # call left rotation on parent of x
-                    x = self.root
-            else :                                        # If x is right child of its parent
-                s = x.p.left                              # Sibling of x
-                if s.color == 1 :                         # if sibling is red
-                    s.color = 0                           # Set its color to black
-                    x.p.color = 1                         # Make its parent red
-                    self.RR ( x.p )                       # Call for right rotate on parent of x
-                    s = x.p.left
+                    s.color = x.p.color  # Set sibling's color to parent's color
+                    x.p.color = 0  # Set parent's color to black
+                    s.right.color = 0  # Set right child of sibling to black
+                    self.LR(x.p)  # Call left rotation on parent
+                    x = self.root  # Set x to root (tree is balanced)
+            else:  # If x is right child of its parent
+                s = x.p.left  # Sibling of x
+                if s.color == 1:  # If sibling is red
+                    s.color = 0  # Set sibling's color to black
+                    x.p.color = 1  # Make parent's color red
+                    self.RR(x.p)  # Call right rotation on parent
+                    s = x.p.left  # Update sibling
+                if s.right.color == 0 and s.left.color == 0:  # If both children of sibling are black
+                    s.color = 1  # Set sibling's color to red
+                    x = x.p  # Move x up to parent
+                else:
+                    if s.left.color == 0:  # If left child of sibling is black
+                        s.right.color = 0  # Set right child of sibling to black
+                        s.color = 1  # Set sibling's color to red
+                        self.LR(s)  # Call left rotation on sibling
+                        s = x.p.left  # Update sibling after rotation
 
-                if s.right.color == 0 and s.right.color == 0 :
-                    s.color = 1
-                    x = x.p
-                else :
-                    if s.left.color == 0 :                # If left child of s is black
-                        s.right.color = 0                 # set right child of s as black
-                        s.color = 1
-                        self.LR ( s )                     # call left rotation on x
-                        s = x.p.left
+                    s.color = x.p.color  # Set sibling's color to parent's color
+                    x.p.color = 0  # Set parent's color to black
+                    s.left.color = 0  # Set left child of sibling to black
+                    self.RR(x.p)  # Call right rotation on parent
+                    x = self.root  # Set x to root (tree is balanced)
+        x.color = 0  # Ensure x is black
 
-                    s.color = x.p.color
-                    x.p.color = 0
-                    s.left.color = 0
-                    self.RR ( x.p )
-                    x = self.root
-        x.color = 0
 
 
     # Function to transplant nodes
@@ -257,32 +264,34 @@ class RBTree():
         else:
             self.RB_Delete(z)
 
-    def RB_Delete( self, z ):
+    def RB_Delete(self, z):
         y = z
-        y_original_color = y.color                          # Store the color of z- node
-        if z.left == self.NULL :                            # If left child of z is NULL
-            x = z.right                                     # Assign right child of z to x
-            self.__rb_transplant ( z , z.right )            # Transplant Node to be deleted with x
-        elif (z.right == self.NULL) :                       # If right child of z is NULL
-            x = z.left                                      # Assign left child of z to x
-            self.__rb_transplant ( z , z.left )             # Transplant Node to be deleted with x
-        else :                                              # If z has both the child nodes
-            y = self.Tree_Minimum ( z.right )                    # Find minimum of the right sub tree
-            y_original_color = y.color                      # Store color of y
+        y_original_color = y.color
+
+        if z.left == self.NULL:
+            x = z.right
+            self.__rb_transplant(z, z.right)
+        elif z.right == self.NULL:
+            x = z.left
+            self.__rb_transplant(z, z.left)
+        else:
+            y = self.Tree_Minimum(z.right)
+            y_original_color = y.color
             x = y.right
-            if y.p == z :                              # If y is child of z
-                x.p = y                                # Set parent of x as y
-            else :
-                self.__rb_transplant ( y , y.right )
+            if y.p == z:
+                x.p = y
+            else:
+                self.__rb_transplant(y, y.right)
                 y.right = z.right
                 y.right.p = y
 
-            self.__rb_transplant ( z , y )
+            self.__rb_transplant(z, y)
             y.left = z.left
             y.left.p = y
             y.color = z.color
-        if y_original_color == 0 :                          # If color is black then fixing is needed
-            self.fixDelete ( x )
+
+        if y_original_color == 0:
+            self.fixDelete(x)
 
 
     # Deletion of node
