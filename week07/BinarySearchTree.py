@@ -120,7 +120,25 @@ class BSTree:
     def print_BSTree ( self ) :
         self.__printCall ( self.root , "" , True )
 
+t = BSTree()
+items = [85,19,4,5,34,180,42]
+for i in items:
+    t.Tree_Insert(BST_Node(i))
 
+
+
+
+t.print_BSTree()
+d = t.Tree_Search(85)
+t.Tree_Delete(d)
+t.print_BSTree()
+d = t.Tree_Search(4)
+t.Tree_Delete(d)
+t.print_BSTree()
+t.Tree_Insert(BST_Node(0))
+t.print_BSTree()
+t.Tree_Insert(BST_Node(105))
+t.print_BSTree()
 
 
 

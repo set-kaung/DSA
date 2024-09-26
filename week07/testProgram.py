@@ -65,6 +65,8 @@ rbt.print_RBTree()
 print("deleting 8...", end="\n\n")
 rbt.delete(8)
 rbt.print_RBTree()
+rbt.delete(5)
+rbt.print_RBTree()
 
 
 # print("Red Black Tree")

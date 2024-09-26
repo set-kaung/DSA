@@ -68,6 +68,8 @@ class RBTree():
 
 
     def Tree_Minimum(self, node):
+        if node == None:
+            return
         while node.left != self.NULL:
             node = node.left
         return node
@@ -321,6 +323,23 @@ class RBTree():
 
 
 
+rbt = RBTree()
+items = [5,10,15,20,25,30,35,40,45,50,55]
+for i in items:
+    rbt.RB_Insert(RB_Node(i))
+    rbt.print_RBTree()
+    print()
+
+
+rbt.RB_Delete(RB_Node(25))
+rbt.print_RBTree()
+print()
+rbt.RB_Delete(RB_Node(40))
+rbt.print_RBTree()
+print()
+rbt.RB_Insert(RB_Node(-10))
+rbt.print_RBTree()
+print()
 
 # rbtroot = RBTree()
 # N = [1000,2000,4000,8000]
