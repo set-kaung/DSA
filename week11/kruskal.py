@@ -2,25 +2,30 @@
 # ID: 6632017
 # Sec: 543
 
+from disjointsets3 import DisjointSets
+
 V,E = map(int, input().split())
 edgeList = []
-for i in range(E):
+for _ in range(E):
     edgeList.append(tuple(map(int, input().split())))
 
-def weight(i):
+def getWeight(i):
     return i[2]
 
 
-from disjointsets3 import DisjointSets
+# initialise the disjoint sets with vertices
+disjointSets = DisjointSets(V)
 
-s = DisjointSets(V)
-edgeList.sort(key=weight)
+
+# sort edges by weight
+edgeList.sort(key=getWeight)
+
 total = 0
-for e in edgeList:
-    st,des,w = e
-    if s.findset(st) != s.findset(des):
-        total += w
-        s.union(st,des)
 
+for i in range(V):
+    start,end,w = edgeList[i]
+    if disjointSets.findset(start) != disjointSets.findset(end):
+        total += w
+        disjointSets.union(start,end)
 
 print(total)

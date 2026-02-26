@@ -18,8 +18,11 @@ class heap:
             largest = l
         else:
             largest = i
+
         if r < self.heapsize and self.cmp(self.a[r],self.a[largest]):
             largest = r
+
+             
         if largest != i:
             self.a[i],self.a[largest] = self.a[largest],self.a[i]
             self.heapify(largest)

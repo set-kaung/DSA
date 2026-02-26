@@ -12,27 +12,24 @@ from disjointsets3 import DisjointSets
 s = DisjointSets(V)
 
 # Complete the code below
-for i in edgeList:
-    a,b,_ = i
-    s.union(a,b)
+def connected(edges):
+    for i in edges:
+        a,b,_ = i
+        s.union(a,b)
 
-same = True
-p = s.findset(0)
-for i in range(1,V):
-    q = s.findset(i)
-    print(f"parent of {i} is {q}, current parent is {p}")
-    if p != q:
-        same = False
-        break
+    same = True
+    p = s.findset(0)
+    for i in range(1,V):
+        q = s.findset(i)
+        print(f"parent of {i} is {q}, current parent is {p}")
+        if p != q:
+            same = False
+            break
 
-if same:
-    print("connected")
-else:
-    print("disconnected")
-
-    
-
-
-
+    if same:
+        print("connected")
+    else:
+        print("disconnected")
 
     
+connected(edgeList)

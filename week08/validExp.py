@@ -5,7 +5,9 @@ def evaluate(postfix_expr):
     A = int(input("Enter number for A:"))
     B = int(input("Enter number for B:"))
     C = int(input("Enter number for C:"))
-    numbers = {"A":A, "B":B, "C":C}
+    D = int(input("Enter number for D:"))
+    E = int(input("Enter number for E:"))
+    numbers = {"A":A, "B":B, "C":C, "D":D, "E":E}
     Stack = []
     postfix_expr = postfix_expr.split()
     for token in postfix_expr:
@@ -67,6 +69,7 @@ def infix_to_postfix(infix):
 
 infix_expr = input().split()
 post_fix = infix_to_postfix(infix_expr)
+print(post_fix)
 if post_fix == "":
     print("Not valid")
 else:

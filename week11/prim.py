@@ -10,12 +10,11 @@ for _ in range(E):
     adj_list[u].append((v, w))
     adj_list[v].append((u, w))
 
+
+    
 class heap:
     def compare(x, y):  # a default compare function for min heap
         return x < y
-    
-    def maxcompare(x,y):
-        return x > y
 
     def empty(self):
         if self.heapsize == 0:
@@ -82,7 +81,7 @@ def Prim(V,adj_list) -> int:
         h.insert((0,v,w))
 
     while len(visited) < V and not h.empty():
-        u,v,w = h.extract()
+        _,v,w = h.extract()
         if v not in visited:
             total_weight += w
             visited.add(v)
@@ -94,6 +93,8 @@ def Prim(V,adj_list) -> int:
     return total_weight
 
 print(Prim(V,adj_list=adj_list))
+
+
 
 
 

@@ -60,6 +60,7 @@ rbt = RBTree()
 a = [i for i in range(1,11+1)]
 for k in a:
     rbt.insert(k)
+    rbt.print_RBTree()
 rbt.print_RBTree()
 
 print("deleting 8...", end="\n\n")
